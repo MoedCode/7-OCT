@@ -1,0 +1,37 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="flex flex-col min-h-screen font-sans antialiased" style="background-color: #d2d1d3;">
+    <!-- Navigation Bar -->
+    <nav class="p-4 text-white flex justify-between rounded-xl" style="background-color: #ff9900;">
+        <div>
+            <h1 class="text-3xl font-bold font-sans transition duration-300 ease-in-out transform hover:scale-105 text-black">E-Com Site</h1>
+        </div>
+        <div class="flex-1">
+            <div class="p-4 text-left font-semibold space-x-2 text-black">
+                <a href="{% url 'index' %}" class="rounded-lg hover:bg-white transition duration-300 ease-in-out transform hover:scale-110 text-black">Home</a>
+                <a href="#" class="rounded-lg hover:bg-white transition duration-300 ease-in-out transform hover:scale-110 text-black">About</a>
+            </div>
+        </div>
+        <div class="flex space-x-4 p-4">
+            <a href="#" class="rounded-lg hover:bg-white transition duration-300 ease-in-out transform hover:scale-110 text-black">Cart</a>
+            <a href="# " class="rounded-lg hover:bg-white transition duration-300 ease-in-out transform hover:scale-105 text-black">{{ user.username }}</a>
+            <a href="# " class="rounded-lg hover:bg-white transition duration-300 ease-in-out transform hover:scale-105 text-black">Account</a>
+        </div>
+    </nav>
+    
+    <!-- Content Block -->
+    <div class="flex-grow">
+        {% block content %}
+        
+        {% endblock %}
+    </div>
+</body>
+</html>
