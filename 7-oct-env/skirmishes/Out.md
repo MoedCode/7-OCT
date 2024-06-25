@@ -52,6 +52,23 @@ from django.db import models
 
 -------------------------------
 
+Displaying: ./Ohaio/templatetags/range_filters.py
+# Ohaio/templatetags/range_filters.py
+
+from django import template
+
+register = template.Library()
+
+@register.filter(name='get_range')
+def get_range(value):
+    return range(value)
+
+-------------------------------
+
+Displaying: ./Ohaio/templatetags/__init__.py
+
+-------------------------------
+
 Displaying: ./Ohaio/tests.py
 from django.test import TestCase
 
@@ -67,7 +84,9 @@ urlpatterns = [
     path("", views.index, name="index"),  # Corrected from "/" to ""
     path("trash", views.index1, name="index1"),
     path("<str:name>", views.great, name="great"),
-    path("<str:name>/<int:number>", views.useless, name="useless")
+    path("useless/<str:text>/<int:number>", views.useless, name="useless"),
+
+
 ]
 -------------------------------
 
@@ -89,6 +108,7 @@ def useless(request, text, number):
     return render(request, "useless.html",{
         "text":text, "number":number
     })
+
 -------------------------------
 
 Displaying: ./Ohaio/__init__.py
@@ -294,3 +314,751 @@ Displaying: ./skirmishes/__init__.py
 
 -------------------------------
 
+project file structure
+ % ls
+CAT.sh  Ohaio  Out.md  db.sqlite3  manage.py  skirmishes
+mohamed@DESKTOP-S296B4S /mnt/c/Users/Active/Desktop/Coding/Short_Specializations/Portfolio_project/7-OCT/7-oct-env/skirmishes
+ % ls Ohaio
+__init__.py  __pycache__  admin.py  apps.py  migrations  models.py  templates  templatetags  tests.py  url.py  views.py
+mohamed@DESKTOP-S296B4S /mnt/c/Users/Active/Desktop/Coding/Short_Specializations/Portfolio_project/7-OCT/7-oct-env/skirmishes
+ % ls Ohaio/templatetags
+__init__.py  range_filters.py
+mohamed@DESKTOP-S296B4S /mnt/c/Users/Active/Desktop/Coding/Short_Specializations/Portfolio_project/7-OCT/7-oct-env/skirmishes
+ %
+in the browser
+TemplateSyntaxError at /Ohaio/useless/HI!/10
+'range_filter' is not a registered tag library. Must be one of:
+admin_list
+admin_modify
+admin_urls
+cache
+i18n
+l10n
+log
+static
+tz
+Request Method:	GET
+Request URL:	http://127.0.0.1:8000/Ohaio/useless/HI!/10
+Django Version:	4.2.13
+Exception Type:	TemplateSyntaxError
+Exception Value:
+'range_filter' is not a registered tag library. Must be one of:
+admin_list
+admin_modify
+admin_urls
+cache
+i18n
+l10n
+log
+static
+tz
+Exception Location:	/mnt/c/Users/Active/Desktop/Coding/Short_Specializations/Portfolio_project/7-OCT/7-oct-env/lib/python3.8/site-packages/django/template/defaulttags.py, line 1028, in find_library
+Raised during:	Ohaio.views.useless
+Python Executable:	/mnt/c/Users/Active/Desktop/Coding/Short_Specializations/Portfolio_project/7-OCT/7-oct-env/bin/python3
+Python Version:	3.8.10
+Python Path:
+['/mnt/c/Users/Active/Desktop/Coding/Short_Specializations/Portfolio_project/7-OCT/7-oct-env/skirmishes',
+ '/mnt/c/Users/Active/Desktop/Coding/Short_Specializations/Portfolio_project/7-OCT/7-oct-env/skirmishes',
+ '/home',
+ '/usr/lib/python38.zip',
+ '/usr/lib/python3.8',
+ '/usr/lib/python3.8/lib-dynload',
+ '/mnt/c/Users/Active/Desktop/Coding/Short_Specializations/Portfolio_project/7-OCT/7-oct-env/lib/python3.8/site-packages']
+Server time:	Tue, 25 Jun 2024 13:11:26 +0000
+Error during template rendering
+In template /mnt/c/Users/Active/Desktop/Coding/Short_Specializations/Portfolio_project/7-OCT/7-oct-env/skirmishes/Ohaio/templates/useless.html, error at line 3
+
+'range_filter' is not a registered tag library. Must be one of: admin_list admin_modify admin_urls cache i18n l10n log static tz
+1	<!-- useless.html -->
+2
+3	{% load range_filter %}
+4
+5	<!DOCTYPE html>
+6	<html lang="en">
+7	<head>
+8	    <meta charset="UTF-8">
+9	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+10	    <title>Document</title>
+11	</head>
+12	<body>
+13	    {% for i in number|get_range %}
+Traceback Switch to copy-and-paste view
+/mnt/c/Users/Active/Desktop/Coding/Short_Specializations/Portfolio_project/7-OCT/7-oct-env/lib/python3.8/site-packages/django/template/defaulttags.py, line 1026, in find_library
+        return parser.libraries[name] …
+Local vars
+Variable	Value
+name
+'range_filter'
+parser
+<Parser tokens=[<Text token: "</body></html>...">, <Block token: "endfor...">, <Text token: "</h1>        <br> ...">, <Var token: "text...">, <Text token: "        <h1>...">, <Block token: "for i in number|get_...">, <Text token: "<!DOCTYPE html><h...">]>
+During handling of the above exception ('range_filter'), another exception occurred:
+/mnt/c/Users/Active/Desktop/Coding/Short_Specializations/Portfolio_project/7-OCT/7-oct-env/lib/python3.8/site-packages/django/core/handlers/exception.py, line 55, in inner
+                response = get_response(request) …
+Local vars
+/mnt/c/Users/Active/Desktop/Coding/Short_Specializations/Portfolio_project/7-OCT/7-oct-env/lib/python3.8/site-packages/django/core/handlers/base.py, line 197, in _get_response
+                response = wrapped_callback(request, *callback_args, **callback_kwargs) …
+Local vars
+/mnt/c/Users/Active/Desktop/Coding/Short_Specializations/Portfolio_project/7-OCT/7-oct-env/skirmishes/Ohaio/views.py, line 15, in useless
+    return render(request, "useless.html",{ …
+Local vars
+/mnt/c/Users/Active/Desktop/Coding/Short_Specializations/Portfolio_project/7-OCT/7-oct-env/lib/python3.8/site-packages/django/shortcuts.py, line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using) …
+Local vars
+/mnt/c/Users/Active/Desktop/Coding/Short_Specializations/Portfolio_project/7-OCT/7-oct-env/lib/python3.8/site-packages/django/template/loader.py, line 61, in render_to_string
+        template = get_template(template_name, using=using) …
+Local vars
+/mnt/c/Users/Active/Desktop/Coding/Short_Specializations/Portfolio_project/7-OCT/7-oct-env/lib/python3.8/site-packages/django/template/loader.py, line 15, in get_template
+            return engine.get_template(template_name) …
+Local vars
+/mnt/c/Users/Active/Desktop/Coding/Short_Specializations/Portfolio_project/7-OCT/7-oct-env/lib/python3.8/site-packages/django/template/backends/django.py, line 33, in get_template
+            return Template(self.engine.get_template(template_name), self) …
+Local vars
+/mnt/c/Users/Active/Desktop/Coding/Short_Specializations/Portfolio_project/7-OCT/7-oct-env/lib/python3.8/site-packages/django/template/engine.py, line 175, in get_template
+        template, origin = self.find_template(template_name) …
+Local vars
+/mnt/c/Users/Active/Desktop/Coding/Short_Specializations/Portfolio_project/7-OCT/7-oct-env/lib/python3.8/site-packages/django/template/engine.py, line 157, in find_template
+                template = loader.get_template(name, skip=skip) …
+Local vars
+/mnt/c/Users/Active/Desktop/Coding/Short_Specializations/Portfolio_project/7-OCT/7-oct-env/lib/python3.8/site-packages/django/template/loaders/cached.py, line 57, in get_template
+            template = super().get_template(template_name, skip) …
+Local vars
+/mnt/c/Users/Active/Desktop/Coding/Short_Specializations/Portfolio_project/7-OCT/7-oct-env/lib/python3.8/site-packages/django/template/loaders/base.py, line 28, in get_template
+                return Template( …
+Local vars
+/mnt/c/Users/Active/Desktop/Coding/Short_Specializations/Portfolio_project/7-OCT/7-oct-env/lib/python3.8/site-packages/django/template/base.py, line 154, in __init__
+        self.nodelist = self.compile_nodelist() …
+Local vars
+/mnt/c/Users/Active/Desktop/Coding/Short_Specializations/Portfolio_project/7-OCT/7-oct-env/lib/python3.8/site-packages/django/template/base.py, line 200, in compile_nodelist
+            return parser.parse() …
+Local vars
+/mnt/c/Users/Active/Desktop/Coding/Short_Specializations/Portfolio_project/7-OCT/7-oct-env/lib/python3.8/site-packages/django/template/base.py, line 513, in parse
+                    raise self.error(token, e) …
+Local vars
+/mnt/c/Users/Active/Desktop/Coding/Short_Specializations/Portfolio_project/7-OCT/7-oct-env/lib/python3.8/site-packages/django/template/base.py, line 511, in parse
+                    compiled_result = compile_func(self, token) …
+Local vars
+/mnt/c/Users/Active/Desktop/Coding/Short_Specializations/Portfolio_project/7-OCT/7-oct-env/lib/python3.8/site-packages/django/template/defaulttags.py, line 1088, in load
+            lib = find_library(parser, name) …
+Local vars
+/mnt/c/Users/Active/Desktop/Coding/Short_Specializations/Portfolio_project/7-OCT/7-oct-env/lib/python3.8/site-packages/django/template/defaulttags.py, line 1028, in find_library
+        raise TemplateSyntaxError( …
+Local vars
+Request information
+USER
+AnonymousUser
+
+GET
+No GET data
+
+POST
+No POST data
+
+FILES
+No FILES data
+
+COOKIES
+Variable	Value
+_octo
+'GH1.1.82653213.1706720106'
+META
+Variable	Value
+CONTENT_LENGTH
+''
+CONTENT_TYPE
+'text/plain'
+DJANGO_SETTINGS_MODULE
+'skirmishes.settings'
+GATEWAY_INTERFACE
+'CGI/1.1'
+HOME
+'/home/mohamed'
+HOSTTYPE
+'x86_64'
+HTTP_ACCEPT
+'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7'
+HTTP_ACCEPT_ENCODING
+'gzip, deflate, br, zstd'
+HTTP_ACCEPT_LANGUAGE
+'en-US,en;q=0.9,cy;q=0.8'
+HTTP_CACHE_CONTROL
+'max-age=0'
+HTTP_CONNECTION
+'keep-alive'
+HTTP_COOKIE
+'********************'
+HTTP_DNT
+'1'
+HTTP_HOST
+'127.0.0.1:8000'
+HTTP_SEC_CH_UA
+'"Not/A)Brand";v="8", "Chromium";v="126", "Microsoft Edge";v="126"'
+HTTP_SEC_CH_UA_MOBILE
+'?0'
+HTTP_SEC_CH_UA_PLATFORM
+'"Windows"'
+HTTP_SEC_FETCH_DEST
+'document'
+HTTP_SEC_FETCH_MODE
+'navigate'
+HTTP_SEC_FETCH_SITE
+'none'
+HTTP_SEC_FETCH_USER
+'?1'
+HTTP_UPGRADE_INSECURE_REQUESTS
+'1'
+HTTP_USER_AGENT
+('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like '
+ 'Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0')
+LANG
+'C.UTF-8'
+LOGNAME
+'mohamed'
+LS_COLORS
+'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'
+NAME
+'DESKTOP-S296B4S'
+NVM_CD_FLAGS
+'-q'
+NVM_DIR
+'/home/mohamed/.nvm'
+NVM_RC_VERSION
+''
+OLDPWD
+'/mnt/c/Users/Active/Desktop/Coding/Short_Specializations/Portfolio_project/7-OCT/7-oct-env'
+PATH
+('/mnt/c/Users/Active/Desktop/Coding/Short_Specializations/Portfolio_project/7-OCT/7-oct-env/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/mnt/c/Program '
+ 'Files/WindowsApps/CanonicalGroupLimited.Ubuntu20.04LTS_2004.6.16.0_x64__79rhkp1fndgsc:/mnt/c/Python311/Scripts/:/mnt/c/Python311/:/mnt/c/Program '
+ 'Files/Microsoft/jdk-11.0.12.7-hotspot/bin:/mnt/c/Program Files/Common '
+ 'Files/Oracle/Java/javapath:/mnt/c/Windows/system32:/mnt/c/Windows:/mnt/c/Windows/System32/Wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0/:/mnt/c/Windows/System32/OpenSSH/:/mnt/c/Program '
+ 'Files/Microsoft SQL Server/150/Tools/Binn/:/mnt/c/Program Files/Microsoft '
+ 'SQL Server/Client SDK/ODBC/170/Tools/Binn/:/mnt/c/Program '
+ 'Files/dotnet/:/mnt/c/Users/Active/AppData/Local/Programs/Microsoft VS '
+ 'Code/bin:/mnt/c/mingw64/bin:/mnt/c/msys64/mingw64/bin:/mnt/c/msys64/clang64/bin:/mnt/c/Program '
+ 'Files/nodejs/:/mnt/c/ProgramData/chocolatey/bin:/mnt/c/Users/Active/AppData/Roaming/npm:/mnt/c/Program '
+ 'Files (x86)/Microsoft SQL Server/150/Tools/Binn/:/mnt/c/Program '
+ 'Files/Microsoft SQL Server/150/DTS/Binn/:/mnt/c/Program Files/Azure Data '
+ 'Studio/bin:/mnt/c/Program '
+ 'Files/Git/cmd:/mnt/c/Users/Active/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/Active/.dotnet/tools:/mnt/c/Program '
+ 'Files/heroku/bin')
+PATH_INFO
+'/Ohaio/useless/HI!/10'
+PS1
+'%K{blue}%n@%m%k %B%F{green}%120<...<%~\n%{\r%}%F{white} %# %b%f%k'
+PWD
+'/mnt/c/Users/Active/Desktop/Coding/Short_Specializations/Portfolio_project/7-OCT/7-oct-env/skirmishes'
+PYTHONPATH
+':/home/mohamed/..'
+QUERY_STRING
+''
+REMOTE_ADDR
+'127.0.0.1'
+REMOTE_HOST
+''
+REQUEST_METHOD
+'GET'
+RUN_MAIN
+'true'
+SCRIPT_NAME
+''
+SERVER_NAME
+'localhost'
+SERVER_PORT
+'8000'
+SERVER_PROTOCOL
+'HTTP/1.1'
+SERVER_SOFTWARE
+'WSGIServer/0.2'
+SHELL
+'/usr/bin/zsh'
+SHLVL
+'1'
+TERM
+'xterm-256color'
+TZ
+'UTC'
+USER
+'mohamed'
+VIRTUAL_ENV
+'/mnt/c/Users/Active/Desktop/Coding/Short_Specializations/Portfolio_project/7-OCT/7-oct-env'
+WSLENV
+''
+WSL_DISTRO_NAME
+'Ubuntu-20.04'
+_
+'/mnt/c/Users/Active/Desktop/Coding/Short_Specializations/Portfolio_project/7-OCT/7-oct-env/bin/python3'
+wsgi.errors
+<_io.TextIOWrapper name='<stderr>' mode='w' encoding='utf-8'>
+wsgi.file_wrapper
+<class 'wsgiref.util.FileWrapper'>
+wsgi.input
+<django.core.handlers.wsgi.LimitedStream object at 0x7f615936ec70>
+wsgi.multiprocess
+False
+wsgi.multithread
+True
+wsgi.run_once
+False
+wsgi.url_scheme
+'http'
+wsgi.version
+(1, 0)
+Settings
+Using settings module skirmishes.settings
+Setting	Value
+ABSOLUTE_URL_OVERRIDES
+{}
+ADMINS
+[]
+ALLOWED_HOSTS
+[]
+APPEND_SLASH
+True
+AUTHENTICATION_BACKENDS
+['django.contrib.auth.backends.ModelBackend']
+AUTH_PASSWORD_VALIDATORS
+'********************'
+AUTH_USER_MODEL
+'auth.User'
+BASE_DIR
+PosixPath('/mnt/c/Users/Active/Desktop/Coding/Short_Specializations/Portfolio_project/7-OCT/7-oct-env/skirmishes')
+CACHES
+{'default': {'BACKEND': 'django.core.cache.backends.locmem.LocMemCache'}}
+CACHE_MIDDLEWARE_ALIAS
+'default'
+CACHE_MIDDLEWARE_KEY_PREFIX
+'********************'
+CACHE_MIDDLEWARE_SECONDS
+600
+CSRF_COOKIE_AGE
+31449600
+CSRF_COOKIE_DOMAIN
+None
+CSRF_COOKIE_HTTPONLY
+False
+CSRF_COOKIE_MASKED
+False
+CSRF_COOKIE_NAME
+'csrftoken'
+CSRF_COOKIE_PATH
+'/'
+CSRF_COOKIE_SAMESITE
+'Lax'
+CSRF_COOKIE_SECURE
+False
+CSRF_FAILURE_VIEW
+'django.views.csrf.csrf_failure'
+CSRF_HEADER_NAME
+'HTTP_X_CSRFTOKEN'
+CSRF_TRUSTED_ORIGINS
+[]
+CSRF_USE_SESSIONS
+False
+DATABASES
+{'default': {'ATOMIC_REQUESTS': False,
+             'AUTOCOMMIT': True,
+             'CONN_HEALTH_CHECKS': False,
+             'CONN_MAX_AGE': 0,
+             'ENGINE': 'django.db.backends.sqlite3',
+             'HOST': '',
+             'NAME': PosixPath('/mnt/c/Users/Active/Desktop/Coding/Short_Specializations/Portfolio_project/7-OCT/7-oct-env/skirmishes/db.sqlite3'),
+             'OPTIONS': {},
+             'PASSWORD': '********************',
+             'PORT': '',
+             'TEST': {'CHARSET': None,
+                      'COLLATION': None,
+                      'MIGRATE': True,
+                      'MIRROR': None,
+                      'NAME': None},
+             'TIME_ZONE': None,
+             'USER': ''}}
+DATABASE_ROUTERS
+[]
+DATA_UPLOAD_MAX_MEMORY_SIZE
+2621440
+DATA_UPLOAD_MAX_NUMBER_FIELDS
+1000
+DATA_UPLOAD_MAX_NUMBER_FILES
+100
+DATETIME_FORMAT
+'N j, Y, P'
+DATETIME_INPUT_FORMATS
+['%Y-%m-%d %H:%M:%S',
+ '%Y-%m-%d %H:%M:%S.%f',
+ '%Y-%m-%d %H:%M',
+ '%m/%d/%Y %H:%M:%S',
+ '%m/%d/%Y %H:%M:%S.%f',
+ '%m/%d/%Y %H:%M',
+ '%m/%d/%y %H:%M:%S',
+ '%m/%d/%y %H:%M:%S.%f',
+ '%m/%d/%y %H:%M']
+DATE_FORMAT
+'N j, Y'
+DATE_INPUT_FORMATS
+['%Y-%m-%d',
+ '%m/%d/%Y',
+ '%m/%d/%y',
+ '%b %d %Y',
+ '%b %d, %Y',
+ '%d %b %Y',
+ '%d %b, %Y',
+ '%B %d %Y',
+ '%B %d, %Y',
+ '%d %B %Y',
+ '%d %B, %Y']
+DEBUG
+True
+DEBUG_PROPAGATE_EXCEPTIONS
+False
+DECIMAL_SEPARATOR
+'.'
+DEFAULT_AUTO_FIELD
+'django.db.models.BigAutoField'
+DEFAULT_CHARSET
+'utf-8'
+DEFAULT_EXCEPTION_REPORTER
+'django.views.debug.ExceptionReporter'
+DEFAULT_EXCEPTION_REPORTER_FILTER
+'django.views.debug.SafeExceptionReporterFilter'
+DEFAULT_FILE_STORAGE
+'django.core.files.storage.FileSystemStorage'
+DEFAULT_FROM_EMAIL
+'webmaster@localhost'
+DEFAULT_INDEX_TABLESPACE
+''
+DEFAULT_TABLESPACE
+''
+DISALLOWED_USER_AGENTS
+[]
+EMAIL_BACKEND
+'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST
+'localhost'
+EMAIL_HOST_PASSWORD
+'********************'
+EMAIL_HOST_USER
+''
+EMAIL_PORT
+25
+EMAIL_SSL_CERTFILE
+None
+EMAIL_SSL_KEYFILE
+'********************'
+EMAIL_SUBJECT_PREFIX
+'[Django] '
+EMAIL_TIMEOUT
+None
+EMAIL_USE_LOCALTIME
+False
+EMAIL_USE_SSL
+False
+EMAIL_USE_TLS
+False
+FILE_UPLOAD_DIRECTORY_PERMISSIONS
+None
+FILE_UPLOAD_HANDLERS
+['django.core.files.uploadhandler.MemoryFileUploadHandler',
+ 'django.core.files.uploadhandler.TemporaryFileUploadHandler']
+FILE_UPLOAD_MAX_MEMORY_SIZE
+2621440
+FILE_UPLOAD_PERMISSIONS
+420
+FILE_UPLOAD_TEMP_DIR
+None
+FIRST_DAY_OF_WEEK
+0
+FIXTURE_DIRS
+[]
+FORCE_SCRIPT_NAME
+None
+FORMAT_MODULE_PATH
+None
+FORM_RENDERER
+'django.forms.renderers.DjangoTemplates'
+IGNORABLE_404_URLS
+[]
+INSTALLED_APPS
+['Ohaio',
+ 'django.contrib.admin',
+ 'django.contrib.auth',
+ 'django.contrib.contenttypes',
+ 'django.contrib.sessions',
+ 'django.contrib.messages',
+ 'django.contrib.staticfiles']
+INTERNAL_IPS
+[]
+LANGUAGES
+[('af', 'Afrikaans'),
+ ('ar', 'Arabic'),
+ ('ar-dz', 'Algerian Arabic'),
+ ('ast', 'Asturian'),
+ ('az', 'Azerbaijani'),
+ ('bg', 'Bulgarian'),
+ ('be', 'Belarusian'),
+ ('bn', 'Bengali'),
+ ('br', 'Breton'),
+ ('bs', 'Bosnian'),
+ ('ca', 'Catalan'),
+ ('ckb', 'Central Kurdish (Sorani)'),
+ ('cs', 'Czech'),
+ ('cy', 'Welsh'),
+ ('da', 'Danish'),
+ ('de', 'German'),
+ ('dsb', 'Lower Sorbian'),
+ ('el', 'Greek'),
+ ('en', 'English'),
+ ('en-au', 'Australian English'),
+ ('en-gb', 'British English'),
+ ('eo', 'Esperanto'),
+ ('es', 'Spanish'),
+ ('es-ar', 'Argentinian Spanish'),
+ ('es-co', 'Colombian Spanish'),
+ ('es-mx', 'Mexican Spanish'),
+ ('es-ni', 'Nicaraguan Spanish'),
+ ('es-ve', 'Venezuelan Spanish'),
+ ('et', 'Estonian'),
+ ('eu', 'Basque'),
+ ('fa', 'Persian'),
+ ('fi', 'Finnish'),
+ ('fr', 'French'),
+ ('fy', 'Frisian'),
+ ('ga', 'Irish'),
+ ('gd', 'Scottish Gaelic'),
+ ('gl', 'Galician'),
+ ('he', 'Hebrew'),
+ ('hi', 'Hindi'),
+ ('hr', 'Croatian'),
+ ('hsb', 'Upper Sorbian'),
+ ('hu', 'Hungarian'),
+ ('hy', 'Armenian'),
+ ('ia', 'Interlingua'),
+ ('id', 'Indonesian'),
+ ('ig', 'Igbo'),
+ ('io', 'Ido'),
+ ('is', 'Icelandic'),
+ ('it', 'Italian'),
+ ('ja', 'Japanese'),
+ ('ka', 'Georgian'),
+ ('kab', 'Kabyle'),
+ ('kk', 'Kazakh'),
+ ('km', 'Khmer'),
+ ('kn', 'Kannada'),
+ ('ko', 'Korean'),
+ ('ky', 'Kyrgyz'),
+ ('lb', 'Luxembourgish'),
+ ('lt', 'Lithuanian'),
+ ('lv', 'Latvian'),
+ ('mk', 'Macedonian'),
+ ('ml', 'Malayalam'),
+ ('mn', 'Mongolian'),
+ ('mr', 'Marathi'),
+ ('ms', 'Malay'),
+ ('my', 'Burmese'),
+ ('nb', 'Norwegian Bokmål'),
+ ('ne', 'Nepali'),
+ ('nl', 'Dutch'),
+ ('nn', 'Norwegian Nynorsk'),
+ ('os', 'Ossetic'),
+ ('pa', 'Punjabi'),
+ ('pl', 'Polish'),
+ ('pt', 'Portuguese'),
+ ('pt-br', 'Brazilian Portuguese'),
+ ('ro', 'Romanian'),
+ ('ru', 'Russian'),
+ ('sk', 'Slovak'),
+ ('sl', 'Slovenian'),
+ ('sq', 'Albanian'),
+ ('sr', 'Serbian'),
+ ('sr-latn', 'Serbian Latin'),
+ ('sv', 'Swedish'),
+ ('sw', 'Swahili'),
+ ('ta', 'Tamil'),
+ ('te', 'Telugu'),
+ ('tg', 'Tajik'),
+ ('th', 'Thai'),
+ ('tk', 'Turkmen'),
+ ('tr', 'Turkish'),
+ ('tt', 'Tatar'),
+ ('udm', 'Udmurt'),
+ ('uk', 'Ukrainian'),
+ ('ur', 'Urdu'),
+ ('uz', 'Uzbek'),
+ ('vi', 'Vietnamese'),
+ ('zh-hans', 'Simplified Chinese'),
+ ('zh-hant', 'Traditional Chinese')]
+LANGUAGES_BIDI
+['he', 'ar', 'ar-dz', 'ckb', 'fa', 'ur']
+LANGUAGE_CODE
+'en-us'
+LANGUAGE_COOKIE_AGE
+None
+LANGUAGE_COOKIE_DOMAIN
+None
+LANGUAGE_COOKIE_HTTPONLY
+False
+LANGUAGE_COOKIE_NAME
+'django_language'
+LANGUAGE_COOKIE_PATH
+'/'
+LANGUAGE_COOKIE_SAMESITE
+None
+LANGUAGE_COOKIE_SECURE
+False
+LOCALE_PATHS
+[]
+LOGGING
+{}
+LOGGING_CONFIG
+'logging.config.dictConfig'
+LOGIN_REDIRECT_URL
+'/accounts/profile/'
+LOGIN_URL
+'/accounts/login/'
+LOGOUT_REDIRECT_URL
+None
+MANAGERS
+[]
+MEDIA_ROOT
+''
+MEDIA_URL
+'/'
+MESSAGE_STORAGE
+'django.contrib.messages.storage.fallback.FallbackStorage'
+MIDDLEWARE
+['django.middleware.security.SecurityMiddleware',
+ 'django.contrib.sessions.middleware.SessionMiddleware',
+ 'django.middleware.common.CommonMiddleware',
+ 'django.middleware.csrf.CsrfViewMiddleware',
+ 'django.contrib.auth.middleware.AuthenticationMiddleware',
+ 'django.contrib.messages.middleware.MessageMiddleware',
+ 'django.middleware.clickjacking.XFrameOptionsMiddleware']
+MIGRATION_MODULES
+{}
+MONTH_DAY_FORMAT
+'F j'
+NUMBER_GROUPING
+0
+PASSWORD_HASHERS
+'********************'
+PASSWORD_RESET_TIMEOUT
+'********************'
+PREPEND_WWW
+False
+ROOT_URLCONF
+'skirmishes.urls'
+SECRET_KEY
+'********************'
+SECRET_KEY_FALLBACKS
+'********************'
+SECURE_CONTENT_TYPE_NOSNIFF
+True
+SECURE_CROSS_ORIGIN_OPENER_POLICY
+'same-origin'
+SECURE_HSTS_INCLUDE_SUBDOMAINS
+False
+SECURE_HSTS_PRELOAD
+False
+SECURE_HSTS_SECONDS
+0
+SECURE_PROXY_SSL_HEADER
+None
+SECURE_REDIRECT_EXEMPT
+[]
+SECURE_REFERRER_POLICY
+'same-origin'
+SECURE_SSL_HOST
+None
+SECURE_SSL_REDIRECT
+False
+SERVER_EMAIL
+'root@localhost'
+SESSION_CACHE_ALIAS
+'default'
+SESSION_COOKIE_AGE
+1209600
+SESSION_COOKIE_DOMAIN
+None
+SESSION_COOKIE_HTTPONLY
+True
+SESSION_COOKIE_NAME
+'sessionid'
+SESSION_COOKIE_PATH
+'/'
+SESSION_COOKIE_SAMESITE
+'Lax'
+SESSION_COOKIE_SECURE
+False
+SESSION_ENGINE
+'django.contrib.sessions.backends.db'
+SESSION_EXPIRE_AT_BROWSER_CLOSE
+False
+SESSION_FILE_PATH
+None
+SESSION_SAVE_EVERY_REQUEST
+False
+SESSION_SERIALIZER
+'django.contrib.sessions.serializers.JSONSerializer'
+SETTINGS_MODULE
+'skirmishes.settings'
+SHORT_DATETIME_FORMAT
+'m/d/Y P'
+SHORT_DATE_FORMAT
+'m/d/Y'
+SIGNING_BACKEND
+'django.core.signing.TimestampSigner'
+SILENCED_SYSTEM_CHECKS
+[]
+STATICFILES_DIRS
+[]
+STATICFILES_FINDERS
+['django.contrib.staticfiles.finders.FileSystemFinder',
+ 'django.contrib.staticfiles.finders.AppDirectoriesFinder']
+STATICFILES_STORAGE
+'django.contrib.staticfiles.storage.StaticFilesStorage'
+STATIC_ROOT
+None
+STATIC_URL
+'/static/'
+STORAGES
+{'default': {'BACKEND': 'django.core.files.storage.FileSystemStorage'},
+ 'staticfiles': {'BACKEND': 'django.contrib.staticfiles.storage.StaticFilesStorage'}}
+TEMPLATES
+[{'APP_DIRS': True,
+  'BACKEND': 'django.template.backends.django.DjangoTemplates',
+  'DIRS': [],
+  'OPTIONS': {'context_processors': ['django.template.context_processors.debug',
+                                     'django.template.context_processors.request',
+                                     'django.contrib.auth.context_processors.auth',
+                                     'django.contrib.messages.context_processors.messages']}}]
+TEST_NON_SERIALIZED_APPS
+[]
+TEST_RUNNER
+'django.test.runner.DiscoverRunner'
+THOUSAND_SEPARATOR
+','
+TIME_FORMAT
+'P'
+TIME_INPUT_FORMATS
+['%H:%M:%S', '%H:%M:%S.%f', '%H:%M']
+TIME_ZONE
+'UTC'
+USE_DEPRECATED_PYTZ
+False
+USE_I18N
+True
+USE_L10N
+True
+USE_THOUSAND_SEPARATOR
+False
+USE_TZ
+True
+USE_X_FORWARDED_HOST
+False
+USE_X_FORWARDED_PORT
+False
+WSGI_APPLICATION
+'skirmishes.wsgi.application'
+X_FRAME_OPTIONS
+'DENY'
+YEAR_MONTH_FORMAT
+'F Y'
+You’re seeing this error because you have DEBUG = True in your Django settings file. Change that to False, and Django will display a standard page generated by the handler for this status code.

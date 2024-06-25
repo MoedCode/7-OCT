@@ -15,7 +15,3 @@ def useless(request, text, number):
     return render(request, "useless.html",{
         "text":text, "number":number
     })
-def useless2(request, text, number):
-    return render(request, "useless2.html",{
-        "text":text, "number":number
-    })
