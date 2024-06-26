@@ -1,8 +1,5 @@
-<style>
-    body {
-        background-color: aqua;
-    }
-</style>
+{% load static   %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
 {% include 'parts/navbar.html' %}
 {% block content %}
 {% endblock content %}
