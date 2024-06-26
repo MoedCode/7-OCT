@@ -1,0 +1,190 @@
+<!-- useless.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+<style>
+    body {
+        background-color: aqua;
+    }
+</style>
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+    }
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #333;
+        padding: 10px 20px;
+    }
+    .navbar a {
+        color: white;
+        text-decoration: none;
+        padding: 14px 20px;
+        text-align: center;
+    }
+    .navbar a:hover {
+        background-color: #575757;
+        border-radius: 4px;
+    }
+    .navbar ul {
+        list-style: none;
+        display: flex;
+        margin: 0;
+        padding: 0;
+    }
+    .navbar li {
+        padding: 0 10px;
+    }
+    .navbar .logo {
+        font-size: 1.5em;
+        font-weight: bold;
+    }
+    .navbar .menu {
+        display: flex;
+    }
+    @media (max-width: 600px) {
+        .navbar .menu {
+            flex-direction: column;
+            display: none;
+        }
+        .navbar .menu.active {
+            display: flex;
+        }
+        .navbar .menu-toggle {
+            display: block;
+            cursor: pointer;
+        }
+    }
+    @media (min-width: 601px) {
+        .navbar .menu-toggle {
+            display: none;
+        }
+    }
+</style>
+<body>
+<nav class="navbar">
+    <div class="logo">MyWebsite</div>
+    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+    <ul class="menu">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Services</a></li>
+        <li><a href="#">Contact</a></li>
+    </ul>
+</nav>
+<script>
+    function toggleMenu() {
+        document.querySelector('.menu').classList.toggle('active');
+    }
+</script>
+
+
+</head>
+<body>
+
+
+
+        <br>
+        
+        
+        <h1>xx</h1>
+        <hr>
+
+        
+        <h1>xx</h1>
+        <hr>
+
+        
+        <h1>xx</h1>
+        <hr>
+
+        
+        <h1>xx</h1>
+        <hr>
+
+        
+        <h1>xx</h1>
+        <hr>
+
+        
+        <h1>xx</h1>
+        <hr>
+
+        
+        <h1>xx</h1>
+        <hr>
+
+        
+        <h1>xx</h1>
+        <hr>
+
+        
+        <h1>xx</h1>
+        <hr>
+
+        
+        <h1>xx</h1>
+        <hr>
+
+        
+        <h1> => 10 ::>> [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</h1>
+        
+
+</body>
+</html>
+
+<style>
+    body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        margin: 0;
+    }
+    #echi {
+        margin-top: auto;
+        border-top: 3px solid #ff6600;
+        padding: 20px;
+        background: linear-gradient(45deg, #ffcc00, #ff6600);
+        color: white;
+        text-align: center;
+    }
+    #echi ul {
+        list-style: none;
+        display: flex;
+        justify-content: center;
+        padding: 0;
+        margin: 0;
+        gap: 20px;
+    }
+    #echi li {
+        border: 1px solid white;
+        border-radius: 15px;
+        padding: 10px 20px;
+        background-color: rgba(255, 255, 255, 0.2);
+        transition: background-color 0.3s, transform 0.3s;
+        color: white;
+        font-weight: bold;
+    }
+    #echi li:hover {
+        background-color: rgba(255, 255, 255, 0.5);
+        transform: scale(1.05);
+    }
+</style>
+</head>
+<body>
+<!-- Main content of the page would go here -->
+
+<footer id="echi">
+    <ul>
+        <li>echi</li>
+        <li>Ni</li>
+        <li>sun</li>
+    </ul>
+</footer>
