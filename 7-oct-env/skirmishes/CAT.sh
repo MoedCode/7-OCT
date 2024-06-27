@@ -17,3 +17,10 @@ project_directory="."
 
 # Call the function with the project directory as argument
 display_python_files "$project_directory"
+echo "----- Project templates " >> Out.md
+echo "----- templates------- " >> Out.md
+cat templates/*.html >> Out.md
+echo "----- templates/Ohaio------- " >> Out.md
+cat templates/Ohaio/*.html >> Out.md
+echo "----- templates/parts------- " >> Out.md
+cat templates/parts/*.html >> Out.md

@@ -1,6 +1,10 @@
-{% load static   %}
+<!-- Base.html  -->
+
+ {% load static %}
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
 {% include 'parts/navbar.html' %}
 {% block content %}
+<link rel="stylesheet" href="/skirmishes/static/css/">
+
 {% endblock content %}
 {% include 'parts/footer.html' %}

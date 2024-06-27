@@ -1,5 +1,5 @@
 Displaying: ./manage.py
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
@@ -67,7 +67,7 @@ urlpatterns = [
     path("", views.index, name="index"),  # Corrected from "/" to ""
     path("trash", views.index1, name="index1"),
     path("<str:name>", views.great, name="great"),
-    path("useless/<str:text>/<int:number>", views.useless, name="useless"),
+    path("useless/<str:text>/<str:number>", views.useless, name="useless"),
 
 
 ]
@@ -88,8 +88,9 @@ def index1(request):
 def great(request, name):
     return HttpResponse( f"<h1> Hello , {name} </h1> {request.__dict__}")
 def useless(request, text, number):
-    return render(request, "Ohaio/useless.html",text=text, number=number
-    })
+    x = list(range(int(number)))
+    return render(request, "Ohaio/useless.html",{"text":text, "number":int(number), 'N':x}
+    )
 
 -------------------------------
 
@@ -235,13 +236,16 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
+STATIC_ROOT = os.path.join(BASE_DIR, )
 
-STATIC_URL = 'static/'
-
+STATIC_URL = '/static/'
+STATIC_DIRS = [
+    os.path.join(BASE_DIR, 'skirmishes/static')
+]
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 -------------------------------
 
@@ -296,8 +300,34 @@ Displaying: ./skirmishes/__init__.py
 
 -------------------------------
 
-----------templates/Ohaio/useless.html----------
-<!-- useless.html -->
+----- Project templates 
+----- templates------- 
+<!-- Base.html  -->
+
+<!-- {% load static %} -->
+{% include 'parts/navbar.html' %}
+{% block content %}
+<link rel="stylesheet" href="/skirmishes/static/css/">
+
+{% endblock content %}
+{% include 'parts/footer.html' %}
+----- templates/Ohaio------- 
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {% extends 'Base.html' %}
+    {% block content %}
+</head>
+<body>
+<h1> احنا مين!..  ال ضاع من عمرانا سنين</h1>
+
+</body>
+{% endblock content %}
+</html><!-- useless.html -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -305,11 +335,149 @@ Displaying: ./skirmishes/__init__.py
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+{% extends 'Base.html'  %}
+{% block content %}
+
 </head>
 <body>
-        <h1>{{ text }}</h1>
+
+
+
         <br>
-        <h1>{{ number }}</h1>
+        {% if number < 1 %}
+        <h1> => ValErr : number must be > 0 </h1>
+        {% else %}
+        {%  for i in  N  %}
+        <h1>{{ text }}</h1>
+        <hr>
+
+        {% endfor %}
+        <h1> => {{ number }} ::>> {{N }}</h1>
+        {% endif  %}
 
 </body>
 </html>
+{% endblock content %}
+----- templates/parts------- 
+<!-- footer.html  -->
+<style>
+    body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        margin: 0;
+    }
+    #echi {
+        margin-top: auto;
+        border-top: 3px solid #ff6600;
+        padding: 20px;
+        background: linear-gradient(45deg, #ffcc00, #ff6600);
+        color: white;
+        text-align: center;
+    }
+    #echi ul {
+        list-style: none;
+        display: flex;
+        justify-content: center;
+        padding: 0;
+        margin: 0;
+        gap: 20px;
+    }
+    #echi li {
+        border: 1px solid white;
+        border-radius: 15px;
+        padding: 10px 20px;
+        background-color: rgba(255, 255, 255, 0.2);
+        transition: background-color 0.3s, transform 0.3s;
+        color: white;
+        font-weight: bold;
+    }
+    #echi li:hover {
+        background-color: rgba(255, 255, 255, 0.5);
+        transform: scale(1.05);
+    }
+</style>
+</head>
+<body>
+<!-- Main content of the page would go here -->
+
+<footer id="echi">
+    <ul>
+        <li>echi</li>
+        <li>Ni</li>
+        <li>sun</li>
+    </ul>
+</footer><!-- navbar.html -->
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+    }
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #333;
+        padding: 10px 20px;
+    }
+    .navbar a {
+        color: white;
+        text-decoration: none;
+        padding: 14px 20px;
+        text-align: center;
+    }
+    .navbar a:hover {
+        background-color: #575757;
+        border-radius: 4px;
+    }
+    .navbar ul {
+        list-style: none;
+        display: flex;
+        margin: 0;
+        padding: 0;
+    }
+    .navbar li {
+        padding: 0 10px;
+    }
+    .navbar .logo {
+        font-size: 1.5em;
+        font-weight: bold;
+    }
+    .navbar .menu {
+        display: flex;
+    }
+    @media (max-width: 600px) {
+        .navbar .menu {
+            flex-direction: column;
+            display: none;
+        }
+        .navbar .menu.active {
+            display: flex;
+        }
+        .navbar .menu-toggle {
+            display: block;
+            cursor: pointer;
+        }
+    }
+    @media (min-width: 601px) {
+        .navbar .menu-toggle {
+            display: none;
+        }
+    }
+</style>
+<body>
+<nav class="navbar">
+    <div class="logo">MyWebsite</div>
+    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+    <ul class="menu">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Services</a></li>
+        <li><a href="#">Contact</a></li>
+    </ul>
+</nav>
+<script>
+    function toggleMenu() {
+        document.querySelector('.menu').classList.toggle('active');
+    }
+</script>
