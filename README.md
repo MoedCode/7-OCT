@@ -96,3 +96,7 @@ This project is licensed under the [MIT License](LICENSE).
 ---
 
 Adjust the `<repository_url>`, `<repository_directory>`, `your_database_name`, `your_database_user`, and `your_database_password` placeholders according to your actual project details. This `README.md` provides an overview of the project, setup instructions, technologies used, and guidance for contributors, ensuring clarity for anyone exploring or working with your social media application.
+# Dinamo
+https://discord.com/channels/1159130076546342954/1162038181315743845/1256359464865370222
+# Team 
+https://discord.com/channels/1159130076546342954/1162038181315743845/1256360723739574334
