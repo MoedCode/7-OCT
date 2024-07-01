@@ -1,6 +1,3 @@
-Certainly! Here’s a sample `README.md` content for a social media application built using Django, MySQL, and SQLAlchemy:
-
----
 
 # Social Media Application
 
