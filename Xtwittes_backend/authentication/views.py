@@ -35,10 +35,10 @@ def signup(request):
             "username": request.POST["username"],
             "email": request.POST["email"],
             "password": request.POST["password"],
-            "password2": request.POST["password2"],
+
         }
 
-        if duser["password"] == duser["password2"]:
+        if duser["password"] == request.POST["password2"]:
             if User.objects.filter(email=duser["email"]).exists():
                 messages.info(request, f"{duser['email']} is already exist ")
                 return redirect("signup")
@@ -46,14 +46,16 @@ def signup(request):
                 messages.info(request, f"{duser['username']} is already exist ")
                 return redirect("signup")
             else:
-                del duser["password2"]
                 user_obj = User.objects.create_user(**duser)
                 user_obj.save()
                 tst = User.objects.filter(email=duser["email"]).first()
-                helper.log_f(tst.__dict__)
-
+                x = tst.__dict__
+                helper.log_f(x)
+                print(x)
+                return render(request, "subprof.html", {"email":x["email"],"username":x["username"]})
 
         else:
+
             messages.info(request, "Password  Not Match")
             return redirect("signup")
 
