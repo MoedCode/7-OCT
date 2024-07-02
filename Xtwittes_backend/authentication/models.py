@@ -1,14 +1,16 @@
 #!/usr/bin/env python3
 from django.db import models
 from django.contrib.auth import get_user_model
-
+import uuid
+from datetime import datetime
 User = get_user_model()
 # Create your models here.
 
 
 class Profile(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    # user_id = models.IntegerField()
+    # user = models.OneToOneField(User, on_delete=models.CASCADE)
+    id_user = models.IntegerField()
     bio = models.TextField(blank=True)
     Profile_img = models.ImageField(
         upload_to='profile_images%y%m%d', default='book-icon.png')
