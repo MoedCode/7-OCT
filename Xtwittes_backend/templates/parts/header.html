@@ -11,37 +11,40 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+            background: linear-gradient(90deg, rgb(124, 175, 242) 0%, rgb(241, 154, 221) 100%);
         }
 
-        .footer {
-            background: linear-gradient(90deg, rgb(124, 175, 242) 0%, rgb(241, 154, 221) 100%);
-            padding: 1rem 0;
+        .header {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 1rem;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             color: white;
-            position: absolute;
-            top: 0;
-            width: 100%;
-        }
-
-        .footer h1 {
-            margin: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             text-align: center;
         }
 
-        .footer nav {
-            background-color: rgba(0, 0, 0, 0.8);
-            padding: 1em;
-            text-align: center;
+        .header .logo {
+            background: white;
+            color: black;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            font-size: 2em; /* Larger font size */
         }
 
-        .footer nav a {
+        .header nav {
+            display: flex;
+            gap: 15px;
+        }
+
+        .header nav a {
             color: white;
             text-decoration: none;
-            margin: 0 15px;
             font-size: 1.2em;
         }
 
-        .footer nav a:hover {
+        .header nav a:hover {
             text-decoration: underline;
         }
 
@@ -57,12 +60,9 @@
     </style>
 </head>
 <body>
-    <div class="content">
-        <!-- Main content of the page -->
-    </div>
-    <footer class="footer">
-        <div>
-            <b><h1>𝕏 Twittes</h1></b>
+    <header class="header">
+        <div class="logo">
+            <b>𝕏 Twittes</b>
         </div>
         <nav>
             <a href="{% url 'home' %}">Home</a>
@@ -70,6 +70,7 @@
             <a href="{% url 'login' %}">Login</a>
             <a href="{% url 'search' %}">Search</a>
         </nav>
-    </footer>
+    </header>
+
 </body>
 </html>
