@@ -38,7 +38,7 @@
 
                     <div class="capitalize flex font-semibold hidden lg:block my-2 space-x-3 text-center text-sm">
 
-                        <a href="/api/signup" class="bg-pink-500 pink-500 px-6 py-3 rounded-md shadow text-white">Register</a>
+                        <a href="/signup" class="bg-pink-500 pink-500 px-6 py-3 rounded-md shadow text-white">Register</a>
                     </div>
 
                 </div>
@@ -70,7 +70,7 @@
 
                     <button id="sup-btn" type="submit" class="bg-gradient-to-br from-pink-500 py-3 rounded-md text-white text-xl to-red-400 w-full">Login</button>
                     <div class="text-center mt-5 space-x-2">
-                        <p class="text-base"> Not registered? <a href="/api/signup" class=""> Create a account </a></p>
+                        <p class="text-base"> Not registered? <a href="/signup" class=""> Create a account </a></p>
                     </div>
                 </form>
 
@@ -81,13 +81,13 @@
 
         <!-- Footer -->
         {% include "parts/style.html" %}
-        {% include "parts/footer.html" %}
     <script src="{% static 'assets/js/tippy.all.min.js' %}"></script>
     <script src="{% static 'assets/js/jquery-3.3.1.min.js' %}"></script>
     <script src="{% static 'assets/js/uikit.js' %}"></script>
     <script src="{% static 'assets/js/simplebar.js' %}"></script>
     <script src="{% static 'assets/js/custom.js' %}"></script>
 
+    {% include "parts/footer.html" %}
 
 </body>
 
