@@ -6,38 +6,7 @@
 
 
 <head>
-    <style>
 
-        body{
-            /*background: linear-gradient(
-                to right,
-                rgb(228, 215, 208) 0%,
-                rgb(202, 204, 243) 50%,
-                rgb(240, 240, 233) 50%,
-                rgb(235, 235, 222) 100%
-            ); */
-            background: linear-gradient( rgb(124, 175, 242), rgb(241, 154, 221));
-
-        }
-
-        #nav0{
-            /*border: 1px solid black;*/
-            border-radius: 50px;
-            background-color: rgb(124, 175, 242);
-            display: flex;
-            flex-direction: row;
-            gap: 1%;
-        }
-
-
-        .nav-el:hover{
-            background-color:  rgb(63, 138, 236);
-            border-radius: 100px;
-            padding: 5px;}
-        #sup-btn {
-            background: linear-gradient(rgb(231, 130, 208), rgb(74, 136, 217));
-        }
-    </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="{% static 'assets/images/favicon.png' %}" rel="icon" type="image/png">
@@ -115,21 +84,8 @@
             </div>
         </div>
 
-        <!-- Footer -->
-
-        <div class="lg:mb-5 py-3 uk-link-reset" id="nav0">
-            <div class="flex flex-col items-center justify-between lg:flex-row max-w-6xl mx-auto lg:space-y-0 space-y-3">
-                <div class="flex space-x-2 text-gray-700 uppercase">
-                    <a href="#"class="nav-el"> About</a>
-                    <a href="#"class="nav-el"> Help</a>
-                    <a href="#"class="nav-el"> Terms</a>
-                    <a href="#"class="nav-el"> Privacy</a>
-
-                <p class="capitalize"> © copyright 2020 by socol</p>
-        </div>
-
-    </div>
-
+        {% include "parts/style.html" %}
+        {% include "parts/footer.html" %}
 
     <script src="{% static 'assets/js/tippy.all.min.js' %}"></script>
     <script src="{% static 'assets/js/jquery-3.3.1.min.js' %}"></script>
