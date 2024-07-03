@@ -20,7 +20,7 @@ def about(request):
 
 def default(request):
     """ default"""
-    return render(request, "login.html")
+    return render(request, "about.html")
 
 
 def home(request):
@@ -72,12 +72,12 @@ def login(request):
 
 def login(request):
 
+
     if request.method == 'POST':
-        duser = {
-        "username":request.POST['username'],
-        "password":request.POST['password'],
-        }
-        user = auth.authenticate(username=duser["username"], password=duser["password"])
+        username = request.POST['username']
+        password = request.POST['password']
+
+        user = auth.authenticate(username=username, password=password)
 
         if user is not None:
             auth.login(request, user)
@@ -89,7 +89,7 @@ def login(request):
     else:
         return render(request, 'login.html')
 
-@login_required(login_url='login')
+@login_required(login_url='signin')
 def logout(request):
     auth.logout(request)
     return redirect('login')
