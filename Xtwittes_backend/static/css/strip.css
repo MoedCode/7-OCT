@@ -118,7 +118,7 @@
   margin: 0;
   padding: 0;
   text-align: center;
-  background: #292929;
+  background: #121111;
   -webkit-user-select: none;
   -moz-user-select: none;
   user-select: none;
@@ -160,7 +160,7 @@
   bottom: 0;
   left: 0;
   width: 100%;
-  color: #efefef;
+  color: #c2d0f0;
   font-size: 13px;
   line-height: 20px;
   background: #000;
@@ -196,7 +196,7 @@
 /* links */
 .strp-info a,
 .strp-info a:hover {
-  color: #ccc;
+  color: #addff7;
   border: 0;
   background: none;
   text-decoration: underline;

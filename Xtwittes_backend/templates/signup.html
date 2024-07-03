@@ -6,10 +6,42 @@
 
 
 <head>
+    <style>
+
+        body{
+            /*background: linear-gradient(
+                to right,
+                rgb(228, 215, 208) 0%,
+                rgb(202, 204, 243) 50%,
+                rgb(240, 240, 233) 50%,
+                rgb(235, 235, 222) 100%
+            ); */
+            background: linear-gradient( rgb(124, 175, 242), rgb(241, 154, 221));
+
+        }
+
+        #nav0{
+            /*border: 1px solid black;*/
+            border-radius: 50px;
+            background-color: rgb(124, 175, 242);
+            display: flex;
+            flex-direction: row;
+            gap: 1%;
+        }
+
+
+        .nav-el:hover{
+            background-color:  rgb(63, 138, 236);
+            border-radius: 100px;
+            padding: 5px;}
+        #sup-btn {
+            background: linear-gradient(rgb(231, 130, 208), rgb(74, 136, 217));
+        }
+    </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="{% static 'assets/images/favicon.png' %}" rel="icon" type="image/png">
-    <title>Sign Up - Social Book</title>
+    <title>Sign Up - 𝕏 Twittes</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{% static 'assets/css/icons.css' %}">
@@ -32,12 +64,12 @@
                 <div class="flex items-center lg:justify-between justify-around">
 
                     <a href="trending.html">
-                        <b><h1 style="font-size: 1.5rem;">Social Book</h1></b>
+                        <b><h1 style="font-size: 1.5rem;">𝕏 Twittes</h1></b>
                     </a>
 
                     <div class="capitalize flex font-semibold hidden lg:block my-2 space-x-3 text-center text-sm">
-                        
-                        <a href="/signin" class="bg-pink-500 pink-500 px-6 py-3 rounded-md shadow text-white">Login</a>
+
+                        <a href="/api/login" class="bg-pink-500 pink-500 px-6 py-3 rounded-md shadow text-white">Login</a>
                     </div>
 
                 </div>
@@ -50,7 +82,7 @@
             <div class="lg:p-12 max-w-md max-w-xl lg:my-0 my-12 mx-auto p-6 space-y-">
                 <h1 class="lg:text-3xl text-xl font-semibold mb-6"> Sign Up</h1>
                 <!--<p class="mb-2 text-black text-lg"> Register to manage your account </p>-->
-                
+
 
                 <div>
                     <style>
@@ -62,28 +94,19 @@
                     <h5>{{message}}</h5>
                     {% endfor %}
                 </div>
-                
-                
+
+
                 <form action="" method="POST">
                     {% csrf_token %}
-                    <!--<div class="flex lg:flex-row flex-col lg:space-x-2">
-                        <input type="text" placeholder="First Name"  class="bg-gray-200 mb-2 shadow-none  dark:bg-gray-800" style="border: 1px solid #d3d5d8 !important;">
-                        <input type="text" placeholder="Last Name" class="bg-gray-200 mb-2 shadow-none  dark:bg-gray-800" style="border: 1px solid #d3d5d8 !important;">
-                    </div>-->
+
                     <input type="text" name="username" placeholder="Username" class="bg-gray-200 mb-2 shadow-none  dark:bg-gray-800" style="border: 1px solid #d3d5d8 !important;">
                     <input type="email" name="email" placeholder="Email" class="bg-gray-200 mb-2 shadow-none  dark:bg-gray-800" style="border: 1px solid #d3d5d8 !important;">
                     <input type="password" name="password" placeholder="Password" class="bg-gray-200 mb-2 shadow-none  dark:bg-gray-800" style="border: 1px solid #d3d5d8 !important;">
                     <input type="password" name="password2" placeholder="Confirm Password" class="bg-gray-200 mb-2 shadow-none  dark:bg-gray-800" style="border: 1px solid #d3d5d8 !important;">
-                    <!-- <div class="flex justify-start my-4 space-x-1">
-                        <div class="checkbox">
-                            <input type="checkbox" id="chekcbox1" checked>
-                            <label for="chekcbox1"><span class="checkbox-icon"></span> I Agree</label>
-                        </div>
-                        <a href="#"> Terms and Conditions</a>
-                    </div> -->
-                    <button type="submit" class="bg-gradient-to-br from-pink-500 py-3 rounded-md text-white text-xl to-red-400 w-full">Sign Up</button>
+
+                    <button id="sup-btn" type="submit" class="bg-gradient-to-br from-pink-500 py-3 rounded-md text-white text-xl to-red-400 w-full">Sign Up</button>
                     <div class="text-center mt-5 space-x-2">
-                        <p class="text-base"> Do you have an account? <a href="/signin"> Login </a></p>
+                        <p class="text-base"> Do you have an account? <a href="/api/login"> Login </a></p>
                     </div>
                 </form>
 
@@ -91,62 +114,23 @@
 
             </div>
         </div>
-        
+
         <!-- Footer -->
 
-        <div class="lg:mb-5 py-3 uk-link-reset">
+        <div class="lg:mb-5 py-3 uk-link-reset" id="nav0">
             <div class="flex flex-col items-center justify-between lg:flex-row max-w-6xl mx-auto lg:space-y-0 space-y-3">
                 <div class="flex space-x-2 text-gray-700 uppercase">
-                    <a href="#"> About</a>
-                    <a href="#"> Help</a>
-                    <a href="#"> Terms</a>
-                    <a href="#"> Privacy</a>
-                </div>
+                    <a href="#"class="nav-el"> About</a>
+                    <a href="#"class="nav-el"> Help</a>
+                    <a href="#"class="nav-el"> Terms</a>
+                    <a href="#"class="nav-el"> Privacy</a>
+
                 <p class="capitalize"> © copyright 2020 by socol</p>
-            </div>
         </div>
 
     </div>
 
-    <!--<script>
-        
-        (function (window, document, undefined) {
-            'use strict';
-            if (!('localStorage' in window)) return;
-            var nightMode = localStorage.getItem('gmtNightMode');
-            if (nightMode) {
-                document.documentElement.className += ' dark';
-            }
-        })(window, document);
-    
-    
-        (function (window, document, undefined) {
-    
-            'use strict';
-    
-            // Feature test
-            if (!('localStorage' in window)) return;
-    
-            // Get our newly insert toggle
-            var nightMode = document.querySelector('#night-mode');
-            if (!nightMode) return;
-    
-            // When clicked, toggle night mode on or off
-            nightMode.addEventListener('click', function (event) {
-                event.preventDefault();
-                document.documentElement.classList.toggle('dark');
-                if (document.documentElement.classList.contains('dark')) {
-                    localStorage.setItem('gmtNightMode', true);
-                    return;
-                }
-                localStorage.removeItem('gmtNightMode');
-            }, false);
-    
-        })(window, document);
-    </script>-->
 
-    <!-- Scripts
-    ================================================== -->
     <script src="{% static 'assets/js/tippy.all.min.js' %}"></script>
     <script src="{% static 'assets/js/jquery-3.3.1.min.js' %}"></script>
     <script src="{% static 'assets/js/uikit.js' %}"></script>

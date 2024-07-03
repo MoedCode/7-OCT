@@ -2,6 +2,8 @@ from django.shortcuts import (render, redirect)
 from django.http import  (HttpResponse, JsonResponse)
 from django.contrib import messages
 from django.contrib.auth.models import (User,  auth)
+from django.contrib.auth.decorators import login_required
+
 from .models import Profile
 # from helper import *
 from . import helper
@@ -18,7 +20,7 @@ def about(request):
 
 def default(request):
     """ default"""
-    return render(request, "signin.html")
+    return render(request, "login.html")
 
 
 def home(request):
@@ -67,3 +69,27 @@ def signup(request):
 
 def login(request):
     return render(request, "login.html")
+
+def login(request):
+
+    if request.method == 'POST':
+        duser = {
+        "username":request.POST['username'],
+        "password":request.POST['password'],
+        }
+        user = auth.authenticate(username=duser["username"], password=duser["password"])
+
+        if user is not None:
+            auth.login(request, user)
+            return redirect('/api')
+        else:
+            messages.info(request, 'Credentials Invalid')
+            return redirect('login')
+
+    else:
+        return render(request, 'login.html')
+
+@login_required(login_url='login')
+def logout(request):
+    auth.logout(request)
+    return redirect('login')
