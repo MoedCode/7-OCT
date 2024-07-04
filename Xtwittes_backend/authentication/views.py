@@ -13,17 +13,42 @@ from . import helper
     Until further notice
 """
 
-
 def about(request):
     """ about"""
     return render(request, "about.html")
+@login_required(login_url='login')
+def setting(request):
+    user_profile = Profile.objects.get(user=request.user)
 
+    if request.method == 'POST':
+
+        if request.FILES.get('image') == None:
+            image = user_profile.profileimg
+            bio = request.POST['bio']
+            location = request.POST['location']
+
+            user_profile.profileimg = image
+            user_profile.bio = bio
+            user_profile.location = location
+            user_profile.save()
+        if request.FILES.get('image') != None:
+            image = request.FILES.get('image')
+            bio = request.POST['bio']
+            location = request.POST['location']
+
+            user_profile.profileimg = image
+            user_profile.bio = bio
+            user_profile.location = location
+            user_profile.save()
+
+        return redirect('settings')
+    return render(request, 'setting.html', {'user_profile': user_profile})
 
 def default(request):
     """ default"""
     return render(request, "about.html")
 
-
+@login_required(login_url="signup")
 def home(request):
     """ home"""
     return render(request, "index.html")
@@ -50,8 +75,12 @@ def signup(request):
                 messages.info(request, f"{duser['username']} is already exist ")
                 return redirect("signup")
             else:
+                # instantiate user
                 user_obj = User.objects.create_user(**duser)
                 user_obj.save()
+                # login user
+                user_login = auth.authenticate(username=duser["username"], password=duser["password"])
+                auth.login(request, user_login)
                 # profile
                 user_query = User.objects.filter(email=duser["email"]).first()
                 ''' START_DEBUG  '''
@@ -68,8 +97,8 @@ def signup(request):
             return redirect("signup")
     return render(request, "signup.html")
 
-def login(request):
-    return render(request, "login.html")
+# def login(request):
+#     return render(request, "login.html")
 
 def login(request):
 
@@ -79,10 +108,10 @@ def login(request):
         password = request.POST['password']
 
         user = auth.authenticate(username=username, password=password)
-
+        print(f"user from login #{user}")
         if user is not None:
             auth.login(request, user)
-            return redirect('/api')
+            return redirect('/home')
         else:
             messages.info(request, 'Credentials Invalid')
             return redirect('login')
@@ -90,7 +119,7 @@ def login(request):
     else:
         return render(request, 'login.html')
 
-@login_required(login_url='signin')
+@login_required(login_url='login')
 def logout(request):
     auth.logout(request)
     return redirect('login')

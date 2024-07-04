@@ -70,3 +70,6 @@ user_c5925660-7b6d-5f35-bff9-787c4debe4f1={'username': 'example0 ', 'email': 'ex
 ```py
 {'_state': <django.db.models.base.ModelState object at 0x7f9e0981fa60>, 'id': 2, 'password': 'pbkdf2_sha256$600000$1WKmmLkYqE4ahsQPoiroS6$BDWxPK0VOk4NRp9vjY0s5v5EIIMREcEM8LQsxUQK9rg=', 'last_login': None, 'is_superuser': False, 'username': 'example0 ', 'first_name': '', 'last_name': '', 'email': 'example0@example0.com', 'is_staff': False, 'is_active': True, 'date_joined': datetime.datetime(2024, 7, 4, 10, 19, 10, 718789, tzinfo=datetime.timezone.utc)}
 ```
+```py
+{'_state': <django.db.models.base.ModelState object at 0x7fd3c4bd3310>, 'id': 3, 'password': 'pbkdf2_sha256$600000$zXbOz6VllAMFrE2vlifJ9u$jST9xHhsVoGNoCkiyBayU7EQzfVca6UVczkfb7yNPKc=', 'last_login': None, 'is_superuser': False, 'username': 'shiko_forma', 'first_name': '', 'last_name': '', 'email': 'shiko_forma@gmail.com', 'is_staff': False, 'is_active': True, 'date_joined': datetime.datetime(2024, 7, 4, 13, 50, 48, 460945, tzinfo=datetime.timezone.utc)}
+```
