@@ -3,6 +3,8 @@ from django.http import JsonResponse
 from django.contrib import messages
 from django.contrib.auth.models import User, auth
 from django.contrib.auth.decorators import login_required
+from .models import Profile, Post, LikePost, FollowersCount
+
 from .models import Profile
 from . import helper
 
