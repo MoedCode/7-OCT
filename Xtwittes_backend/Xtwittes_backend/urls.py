@@ -21,7 +21,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('authentication.url')),
-    # path('api/', include(' Xtwittes_API.url')),
+    # path('api/', include('Xtwittes_API.url')),
 ]
 urlpatterns = urlpatterns + static(
     settings.MEDIA_URL, document_root=settings.MEDIA_ROOT

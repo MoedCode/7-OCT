@@ -1,3 +1,5 @@
+# authentication/helper.py
+
 def assign_id(obj: object, id_type: int = 4, key_name: str = None) -> str:
     """Assigns a unique identifier (UUID) to an object based on the specified type."""
     import uuid
