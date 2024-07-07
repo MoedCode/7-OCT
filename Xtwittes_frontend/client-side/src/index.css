@@ -14,8 +14,10 @@ position: sticky;
 top: 0px;
 z-index: 49;
 }
-
-
+/* 
+.logo{
+  margin: 25px 55px 0;
+} */
 .dots-container {
   display: flex;
   align-items: center;
