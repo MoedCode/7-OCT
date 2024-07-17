@@ -58,9 +58,9 @@ class Post(Base):
     type = models.CharField(
         max_length=4,  choices=[("meme", "Meme"), ("info", "Info")]
     )
-    # likes = models.ManyToManyField(
-        # Users, related_name="liked_posts", blank=True
-    # )
+    likes = models.ManyToManyField(
+        Users, related_name="liked_posts", blank=True
+    )
     def __str__(self):
         return f"{self.author.username}'s post"
 
