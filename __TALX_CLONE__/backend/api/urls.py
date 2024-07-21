@@ -12,7 +12,11 @@ urlpatterns = [
     path('get_all/', views.GetAllByToken.as_view(), name='get_all'),
     path('post/comments', views.PostComments.as_view(), name='post_comments'),
 
+
     path('test', views.test, name='test'),
     path('test2', views.test2, name='test2'),
     path('test3', views.test3, name='test3'),
+    path('get/object/by/id', views.GetObjectById.as_view(), name="get_byId" ),
+    path('update/object/by/id', views.UpdateByID.as_view(), name="update_byId" ),
+
 ]

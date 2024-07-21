@@ -1,24 +1,23 @@
-output
+# url
+```s
+http://127.0.0.1:8000/api/like/
+```
+# output
 ```sh
-System check identified no issues (0 silenced).
-July 18, 2024 - 21:48:59
-Django version 4.2.10, using settings 'backend.settings'
-Starting development server at http://127.0.0.1:8000/
-Quit the server with CONTROL-C.
-
-/mnt/c/Users/Active/Desktop/Coding/Short_Specializations/Portfolio_project/Xtwittes/__TALX_CLONE__/backend/api/views.py changed, reloading.
+mohamed@DESKTOP-S296B4S /mnt/c/Users/Active/Desktop/Coding/Short_Specializations/Portfolio_project/Xtwittes/__TALX_CLONE__/backend
+ % ./manage.py runserver
 Watching for file changes with StatReloader
 Performing system checks...
 
 System check identified no issues (0 silenced).
-July 18, 2024 - 21:53:31
+July 20, 2024 - 16:12:18
 Django version 4.2.10, using settings 'backend.settings'
 Starting development server at http://127.0.0.1:8000/
 Quit the server with CONTROL-C.
 
-Method Not Allowed: /api/get_all/
-[18/Jul/2024 21:53:31] "GET /api/get_all/ HTTP/1.1" 405 6958
-Internal Server Error: /api/get_all/
+Method Not Allowed: /api/like/
+[20/Jul/2024 16:12:23] "GET /api/like/ HTTP/1.1" 405 6834
+Internal Server Error: /api/like/
 Traceback (most recent call last):
   File "/home/mohamed/.local/lib/python3.8/site-packages/django/core/handlers/exception.py", line 55, in inner
     response = get_response(request)
@@ -36,55 +35,55 @@ Traceback (most recent call last):
     raise exc
   File "/home/mohamed/.local/lib/python3.8/site-packages/rest_framework/views.py", line 506, in dispatch
     response = handler(request, *args, **kwargs)
-  File "/mnt/c/Users/Active/Desktop/Coding/Short_Specializations/Portfolio_project/Xtwittes/__TALX_CLONE__/backend/api/views.py", line 205, in post
-    serial_objs = [obj.to_dict() for obj in all_objs]
-TypeError: 'method' object is not iterable
-[18/Jul
+  File "/mnt/c/Users/Active/Desktop/Coding/Short_Specializations/Portfolio_project/Xtwittes/__TALX_CLONE__/backend/api/views.py", line 248, in post
+    if user_id in comment.dislikes:
+TypeError: argument of type 'ManyRelatedManager' is not iterable
+[20/Jul/2024 16:12:35] "POST /api/like/ HTTP/1.1" 500 91275
+
 ```
 code
 ```py
-class GetAllByToken(APIView):
-    def get(self, request):
-        return Response({"detail": "Please use POST to like."},
-                        status=status.HTTP_405_METHOD_NOT_ALLOWED)
+class Like(APIView):
+    def get(self, request):return Response(use_POST,status=S405)
+
     def post(self, request):
         token = request.headers.get('Authorization') or request.data["token"] or None
         username = auth.get_by(token=token) or None
         if not username:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
+            return Response(status=S401)
         data = request.data or None
         if not data:
             return Response({"Error": "Request data missing"},
-                            status=status.HTTP_400_BAD_REQUEST)
-        response_obj = {}
-        msg = ""
-        user = Users.objects.filter(username=username).first()
-        for key in data.keys():
-            if key == "token":
-                continue
-            cls_name = key.lower().strip().capitalize()
-            if cls_name  in classes.keys():
-                if cls_name in ["Comment", "Post"]:
-                    all_objs=classes[cls_name].objects.filter(author=user.ID).all
-                else:
-                    all_objs=classes[cls_name].objects.filter(username=username).all
-                # serial_objs=cls_serializers[cls_name](all_objs, many=True).data
-                serial_objs = [obj.to_dict() for obj in all_objs]
-                response_obj[key] = serial_objs
+            status=S400)
 
-            else:
-                if len(msg) > 0:
-                    msg += ", "
-                else:
-                    msg += "can't find "
-                msg += f"{key}"
+        user_id = Users.objects.filter(username=username).first().ID
 
-        if msg == "":
-            msg = None
+        comment_data = data.get("comment") or None
+        post_data = data.get("post") or None
+
+        if not comment_data and not post_data:
+            msg = "Comment or post data also required"
+            return Response({"Error": msg}, status=S400)
+        if comment_data:
+            ID = comment_data.get("ID") or None
+            action = comment_data.get("action") or None
+            if not ID or not action:
+                return Response({"Error":"ID, action required"},status=S400)
+
+            comment = Comment.objects.filter(ID=ID).first()
+            if action == "like":
+                if user_id in comment.dislikes:
+                    comment.dislikes.remove(user_id)
+                comment.likes.append(user_id)
+            if action == "dislike":
+                if user_id in comment.likes:
+                    comment.likes.remove(user_id)
+                comment.dislikes.append(user_id)
 
 
-        return Response({"data":response_obj, "issues":msg},
-                        status=status.HTTP_200_OK )
+        return Response({"detail": f"Like processed successfully {comment.likes}"},
+        status=S200)
+
 ```
 request
 ```json
@@ -93,19 +92,7 @@ request
 
 "comment": {
 
-    "ID": "a140162a-cbc0-408a-a843-84469f621a55",
-    "action":"like"
-    },
-
-"comment1": {
-
-    "ID": "a140162a-cbc0-408a-a843-84469f621a55",
-    "action":"like"
-    },
-
-"comment2": {
-
-    "ID": "a140162a-cbc0-408a-a843-84469f621a55",
+    "ID": "7fd3b1a4-340f-4d60-8d6e-60838c7981ea",
     "action":"like"
     }
 }

@@ -10,6 +10,16 @@ class Base(models.Model):
     ID = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
+    def update(self, new=None):
+        """
+        new: data to update
+        """
+        if not new:
+            return (False, "new None or not provided")
+        for key in new.keys():
+            if key in self.__dict__.keys():
+                self.key = new[key]
+        self.updated_date = datetime.now()
 
     def to_dict(self):
         new_dict = self.__dict__.copy()
