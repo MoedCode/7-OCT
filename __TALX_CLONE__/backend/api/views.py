@@ -19,6 +19,7 @@ from .models import *
 from .serializers import *
 from .authentication import Authentication
 from .__init__ import *
+from .header import *
 ######################  GLOBALS ################################
 
 auth = Authentication()
@@ -268,20 +269,7 @@ class Like(APIView):
                 "dislikes":dislikes_usernames
             },
         status=S200)
-def get_object(request):
-    data = request.data or None
-    cls_name = data.get("class") or None
-    obj_id = data.get("ID") or None
-    query_obj = classes[cls_name].objects.filter(ID=obj_id).first()
-    serial_obj = query_obj.to_dict()  if query_obj else None
-    if serial_obj:
-        return (True, serial_obj, data.get("new") or None, query_obj)
-    issues  = ""
-    issues += "request data" if data is None else ""
-    issues += ", object class name " if cls_name is None else ""
-    issues += f" ,id object {obj_id} issue" if query_obj is None else ""
-    issues += f" ,serialize issue" if serial_obj is None else ""
-    return Response(False, issues)
+
 class GetObjectById(APIView):
     def get(self, request):return Response(use_POST,status=S405)
     def post(self, request):
@@ -289,20 +277,91 @@ class GetObjectById(APIView):
         if result[0]:
             return Response(result[1], S200)
         return Response(result[1], S404)
+
 class UpdateByID(APIView):
-    def get(self, request):return Response(use_POST,status=S405)
+    def get(self, request):
+        return Response({"detail": "Use POST method"}, status=S.HTTP_405_METHOD_NOT_ALLOWED)
+
     def post(self, request):
+        token = request.headers.get('Authorization') or request.data.get('token')
+        if not token:
+            return Response({"detail": "Authentication token is missing"}, status=S.HTTP_401_UNAUTHORIZED)
+
+        username = auth.get_by(token=token)
+        if not username or not auth.is_logged(token=token):
+            return Response({"detail": "Authentication failed"}, status=S.HTTP_401_UNAUTHORIZED)
+
+        password = request.data.get('password')
+        if not password:
+            return Response({"detail": "Password is required"}, status=S.HTTP_400_BAD_REQUEST)
+
         result = get_object(request)
         if not result[0]:
-            return Response(result[1], S404)
+            return Response({"detail": result[1]}, S404)
         obj = result[3]
         new = result[2]
         if not new:
-            return Response({"issue":f"new data {new}"}, S400)
+            return Response({"issue": f"New data {new}"},S400)
 
-        if obj.__class__ == Users:
-            pass
+        if obj.__class__.__name__ == 'Users':
+            if obj.username != username:
+                return Response({"detail": "You can only update your own data"}, S403)
+            if not auth.authenticate(username=username, password=make_password(password)):
+                return Response({"detail": "Password incorrect"}, S401)
+            update_result = obj.update_user(new)
+        elif obj.__class__.__name__ == 'Comment':
+            if obj.author.username != username:
+                return Response({"detail": "You can only update your own comments"},S403)
+            update_result = obj.update_comment(new)
+        elif obj.__class__.__name__ == 'Post':
+            if obj.author.username != username:
+                return Response({"detail": "You can only update your own posts"}, S403)
+            update_result = obj.update_post(new)
+        else:
+            return Response({"detail": "Unsupported class for update"}, S400)
 
+        if not update_result[0]:
+            return Response({"detail": update_result[1]}, S400)
 
-        return Response( S200)
+        return Response(update_result[1], S200)
 
+class DeleteByID(APIView):
+    def get(self, request):
+        return Response({"detail": "Use POST method"}, status=S405)
+
+    def post(self, request):
+        token = request.headers.get('Authorization') or request.data.get('token')
+        if not token:
+            return Response({"detail": "Authentication token is missing"}, status=S401)
+
+        username = auth.get_by(token=token)
+        if not username or not auth.is_logged(token=token):
+            return Response({"detail": "Authentication failed"}, status=S401)
+
+        password = request.data.get('password')
+        if not password:
+            return Response({"detail": "Password is required"}, status=S400)
+
+        result = get_object(request)
+        if not result[0]:
+            return Response({"detail": result[1]}, status=S404)
+        obj = result[3]
+
+        if obj.__class__.__name__ == 'Users':
+            if obj.username != username:
+                return Response({"detail": "You can only delete your own data"}, status=S403)
+            if not auth.authenticate(username=username, password=make_password(password)):
+                return Response({"detail": "Password incorrect"}, status=S401)
+            obj.delete()
+        elif obj.__class__.__name__ == 'Comment':
+            if obj.author.username != username:
+                return Response({"detail": "You can only delete your own comments"}, status=S403)
+            obj.delete()
+        elif obj.__class__.__name__ == 'Post':
+            if obj.author.username != username:
+                return Response({"detail": "You can only delete your own posts"}, status=S403)
+            obj.delete()
+        else:
+            return Response({"detail": "Unsupported class for deletion"}, status=S400)
+
+        return Response({"detail": "Deleted successfully"}, status=S200)

@@ -18,5 +18,6 @@ urlpatterns = [
     path('test3', views.test3, name='test3'),
     path('get/object/by/id', views.GetObjectById.as_view(), name="get_byId" ),
     path('update/object/by/id', views.UpdateByID.as_view(), name="update_byId" ),
+    path('delete/object/by/id', views.DeleteByIDByID.as_view(), name="delete_byId" ),
 
 ]
